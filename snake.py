@@ -19,7 +19,12 @@ The snake:
 
 """
 
-from neural_network import *
+
+
+import numpy as np
+import pygame
+
+from constants import IMAGE_SNAKE, RIGHT, SPRITE_SIZE
 
 
 class Snake:

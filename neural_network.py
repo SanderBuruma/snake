@@ -19,7 +19,7 @@ The class is build for the snake project so:
 from numba import jit
 import numpy as np
 import pygame
-from constants import *
+from constants import WINDOW_SIZE  
 from pygame import gfxdraw
 
 
@@ -59,11 +59,11 @@ class NeuralNetwork:
         :return: creates two files
         """
         if not name:
-            np.save('saved_weights_'+str(self.score), self.weights)
-            np.save('saved_biases_'+str(self.score), self.biases)
+            np.save('saved_weights_'+str(self.score), self.weights, allow_pickle=True)
+            np.save('saved_biases_'+str(self.score), self.biases, allow_pickle=True)
         else:
-            np.save(name + '_weights', self.weights)
-            np.save(name + '_biases', self.biases)
+            np.save(name + '_weights', self.weights, allow_pickle=True)
+            np.save(name + '_biases', self.biases, allow_pickle=True)
 
     def load(self, filename_weights, filename_biases):
         """
@@ -72,8 +72,8 @@ class NeuralNetwork:
         :param filename_weights: file containing saved weights
         :param filename_biases: file containing saved biases
         """
-        self.weights = np.load(filename_weights)
-        self.biases = np.load(filename_biases)
+        self.weights = np.load(filename_weights, allow_pickle=True)
+        self.biases = np.load(filename_biases, allow_pickle=True)
 
     def render(self, window, vision):
         """
@@ -102,11 +102,11 @@ class NeuralNetwork:
                     for k in range(len(network[i+1])):                                          # connections
                         y2 = int(WINDOW_SIZE/2 + (k * 24) - (len(network[i+1]) - 1) / 2 * 24)   # connections target position
                         x2 = int(WINDOW_SIZE + screen_division * (step+2))
-                        pygame.gfxdraw.line(window, x, y, x2, y2,                               # draw connection
+                        gfxdraw.line(window, x, y, x2, y2,                               # draw connection
                                             (intensity/2+30, intensity/2+30, intensity/2+30, intensity/2+30))
 
-                pygame.gfxdraw.filled_circle(window, x, y, 9, (intensity, intensity, intensity))    # draw neuron
-                pygame.gfxdraw.aacircle(window, x, y, 9, (205, 205, 205))
+                gfxdraw.filled_circle(window, x, y, 9, (intensity, intensity, intensity))    # draw neuron
+                gfxdraw.aacircle(window, x, y, 9, (205, 205, 205))
             step += 2
 
 @jit(nopython=True)

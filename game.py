@@ -17,6 +17,7 @@ Todos:
 - Rethink the class and be able to save the state of the game
 """
 
+from constants import WINDOW_SIZE, WINDOW_TITLE
 from map import *
 from pygame.locals import *
 from snake import *

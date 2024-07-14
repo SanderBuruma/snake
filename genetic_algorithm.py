@@ -18,10 +18,13 @@ Note:
 
 import copy
 import multiprocessing
-from random import randint
-from game import*
-from neural_network import *
+
+import random
+import numpy as np
+from game import Game
 from joblib import Parallel, delayed
+
+from neural_network import NeuralNetwork
 
 
 class GeneticAlgorithm:
@@ -90,7 +93,7 @@ class GeneticAlgorithm:
             networks[0].save(name="gen_"+str(gen))                          # saving best of current generation
 
             for i in range(int(0.2*len(networks))):              # More random mutations because it helps
-                rand = randint(10, len(networks)-1)
+                rand = random.randint(10, len(networks)-1)
                 networks[rand] = self.mutation(networks[rand])
 
             networks = networks[:population_size]       # Keeping only best individuals
@@ -108,9 +111,9 @@ class GeneticAlgorithm:
         """
         parents = []
         for i in range(crossover_number):
-            parent = self.tournament(networks[randint(0, population_size - 1)],      # running tournament
-                                     networks[randint(0, population_size - 1)],
-                                     networks[randint(0, population_size - 1)])
+            parent = self.tournament(networks[random.randint(0, population_size - 1)],      # running tournament
+                                     networks[random.randint(0, population_size - 1)],
+                                     networks[random.randint(0, population_size - 1)])
             parents.append(parent)                                                   # append selected parent
         return parents
 
@@ -125,8 +128,8 @@ class GeneticAlgorithm:
         """
         children = []
         for i in range(crossover_number):
-            child = self.crossover(parents[randint(0, crossover_number - 1)],       # child making
-                                   parents[randint(0, crossover_number - 1)])
+            child = self.crossover(parents[random.randint(0, crossover_number - 1)],       # child making
+                                   parents[random.randint(0, crossover_number - 1)])
             children.append(child)                                                  # append child
         return children
 
@@ -142,7 +145,7 @@ class GeneticAlgorithm:
         """
         mutations = []
         for i in range(mutation_number):
-            mut = self.mutation(networks[randint(0, population_size - 1)])      # mutant making
+            mut = self.mutation(networks[random.randint(0, population_size - 1)])      # mutant making
             mutations.append(mut)                                               # append mutant
         return mutations
 

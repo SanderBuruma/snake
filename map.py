@@ -21,7 +21,10 @@ Notes:
 
 import math
 import random
-from snake import *
+import pygame
+import numba
+
+from constants import IMAGE_FOOD, IMAGE_WALL, MAP, SPRITE_NUMBER, SPRITE_SIZE, WALL
 
 
 class Map:
@@ -201,7 +204,7 @@ class Map:
         self.snake.vision = scan    # gives snake vision
 
 
-@jit(nopython=True)
+@numba.jit(nopython=True)
 def distance(p1=None, p2=None):
     """
     Gives euclidian distance between two points
